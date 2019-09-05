@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Settings">
+
+    <ListPreference
+        android:defaultValue="in"
+        android:entries="@array/settings_order_by_labels"
+        android:entryValues="@array/settings_order_by_values"
+        android:key="choose_country"
+        android:title="Country" />
+    <ListPreference
+    android:defaultValue="business"
+    android:entries="@array/category_order_by_labels"
+    android:entryValues="@array/category_order_by_value"
+    android:key="choose_category"
+    android:title="Category"/>
+
+
+</PreferenceScreen>

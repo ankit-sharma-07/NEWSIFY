@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <ImageView
+           android:id="@+id/img"
+           android:layout_width="match_parent"
+           android:layout_height="400dp"
+           android:layout_marginBottom="5dp"
+           ></ImageView>
+
+       <TextView
+           android:id="@+id/author"
+           android:layout_alignParentBottom="true"
+           android:layout_alignParentLeft="true"
+           android:layout_margin="20dp"
+           android:textColor="@android:color/white"
+           android:textSize="15dp"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+   </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:id="@+id/dummy"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentLeft="true"
+            android:background="#DC143C"/>
+        <TextView
+        android:id="@+id/titles"
+        android:text="Title"
+
+        android:textSize="21dp"
+       android:layout_marginLeft="5dp"
+        android:textColor="@android:color/black"
+        android:layout_width="match_parent"
+            android:layout_marginRight="5dp"
+        android:layout_height="wrap_content" /></LinearLayout>
+    <TextView
+        android:id="@+id/desc"
+        android:textSize="18dp"
+        android:fontFamily="sans-serif-medium"
+        android:layout_width="match_parent"
+        android:layout_marginRight="5dp"
+        android:layout_height="wrap_content"
+       android:layout_marginLeft="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="description"/>
+</LinearLayout>
+
