@@ -23,6 +23,7 @@ import android.webkit.WebView;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,28 +33,32 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String LOG_TAG = MainActivity.class.getName();
     private static final  String newsRequestUrl="https://newsapi.org/v2/top-headlines";
     private static final int newsLoaderId=1;
+    private TextView mEmptyStateTextView;
     private  newsAdapter mNewsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ListView newsListView = (ListView) findViewById(R.id.list);
+
         mNewsAdapter=new newsAdapter(this,new ArrayList<newsObject>());
         newsListView.setAdapter(mNewsAdapter);
+
+        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+        newsListView.setEmptyView(mEmptyStateTextView);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         // And register to be notified of preference changes
         // So we know when the user has adjusted the query settings
         prefs.registerOnSharedPreferenceChangeListener(this);
-        newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+       newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current earthquake that was clicked on
                 newsObject currentNews = mNewsAdapter.getItem(position);
 
-                // Convert the String URL into a URI object (to pass into the Intent constructor)
-                Uri newsUri = Uri.parse(currentNews.getmUrl());
-                WebView myWebView = (WebView) findViewById(R.id.webview);
-                myWebView.loadUrl(String.valueOf(newsUri));
+                Intent urlIntent = new Intent(MainActivity.this, webView.class);
+                urlIntent.putExtra("url", currentNews.getmUrl());
+                startActivity(urlIntent);
         }});
             ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -71,6 +76,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             // because this activity implements the LoaderCallbacks interface).
             loaderManager.initLoader(newsLoaderId, null,  MainActivity.this);
         }
+        else{ View loadingIndicator = findViewById(R.id.loading_indicator);
+            loadingIndicator.setVisibility(View.GONE);
+            mEmptyStateTextView.setText("no internet connection");}
     }
 
 
@@ -92,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<newsObject>> loader, List<newsObject> newsItem) {
+        View loadingIndicator = findViewById(R.id.loading_indicator);
+        loadingIndicator.setVisibility(View.GONE);
         if ( newsItem!= null && !newsItem.isEmpty()) {
             mNewsAdapter.addAll(newsItem);
         }
@@ -124,7 +134,8 @@ mNewsAdapter.clear();
         if (key.equals("choose_country")||key.equals("choose_category")){
             // Clear the ListView as a new query will be kicked off
             mNewsAdapter.clear();
-
+            View loadingIndicator = findViewById(R.id.loading_indicator);
+            loadingIndicator.setVisibility(View.VISIBLE);
             getLoaderManager().restartLoader(newsLoaderId, null, this);
         }
     }
