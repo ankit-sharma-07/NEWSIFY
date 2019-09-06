@@ -15,6 +15,7 @@ public class webView extends AppCompatActivity {
          url=extras.getString("url");
         }
         WebView mywebview = (WebView) findViewById(R.id.webView);
+
         mywebview.loadUrl(url);
     }
 

@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 Intent urlIntent = new Intent(MainActivity.this, webView.class);
                 urlIntent.putExtra("url", currentNews.getmUrl());
+
                 startActivity(urlIntent);
         }});
             ConnectivityManager connMgr = (ConnectivityManager)
